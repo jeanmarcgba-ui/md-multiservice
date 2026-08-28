@@ -11,7 +11,7 @@
 <title>MD Multiservice</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f0f0f0;color:#1a1a1a;max-width:480px;margin:0 auto;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#999999;color:#1a1a1a;max-width:480px;margin:0 auto;min-height:100vh}
 input,select,textarea{width:100%;padding:11px 13px;border:2.5px solid #1a1a1a;border-radius:10px;font-size:15px;background:#fff;font-family:inherit;color:#1a1a1a;outline:none;display:block;font-weight:700}
 input:focus,select:focus,textarea:focus{border-color:#0F6E56;border-width:2.5px}
 input::placeholder,textarea::placeholder{color:#888;font-weight:400}
@@ -22,7 +22,7 @@ textarea{resize:vertical}
 .bw{background:#25D366;color:#fff}
 .bb{background:#1565c0;color:#fff}
 .bx{background:#eee;color:#333;border:1px solid #ddd}
-.card{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.card{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);border:2.5px solid #1a1a1a}
 .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px}
 .bgn{background:#e8f5e9;color:#1b5e20}
 .bbl{background:#e3f2fd;color:#0d47a1}
@@ -34,18 +34,18 @@ textarea{resize:vertical}
 .nb{flex:1;border:none;background:transparent;padding:9px 4px 11px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
 .pg{padding:14px 14px 80px}
 .row{display:flex;gap:10px;align-items:center}
-.st{background:#fff;border-radius:12px;padding:12px 14px;flex:1;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.st{background:#fff;border-radius:12px;padding:12px 14px;flex:1;box-shadow:0 2px 8px rgba(0,0,0,0.15);border:2.5px solid #1a1a1a}
 .bk{background:none;border:none;color:#0F6E56;font-size:14px;font-weight:600;cursor:pointer;padding:4px 0 14px;display:flex;align-items:center;gap:4px}
 .sp{height:1px;background:#eee;margin:10px 0}
 .re{background:#e8f5e9;border-radius:8px;padding:9px 12px;font-size:13px;color:#1b5e20;margin:6px 0;font-weight:500}
-.wn{background:#ffebee;border-radius:10px;padding:12px 14px;font-size:13px;color:#b71c1c;font-weight:600;margin-top:10px;border:1.5px solid #ef9a9a}
+.wn{background:#ffebee;border-radius:10px;padding:12px 14px;font-size:13px;color:#b71c1c;font-weight:600;margin-top:10px;border:2.5px solid #e53935}
 .alb{background:#fff8e1;border:1px solid #ffc107;border-radius:10px;padding:12px 14px;margin:10px 14px 0}
-.rb{border:1.5px solid #e0e0e0;border-radius:10px;padding:12px;margin:10px 0}
+.rb{border:2.5px solid #1a1a1a;border-radius:10px;padding:12px;margin:10px 0}
 .rc{display:flex;align-items:center;gap:10px;background:#f5f5f5;border-radius:10px;padding:12px 14px;margin-top:12px}
 .rc input[type=checkbox]{width:22px;height:22px;cursor:pointer;accent-color:#0F6E56}
 .rc label{font-size:14px;font-weight:600;cursor:pointer}
 .ar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.sb{background:#f9f9f9;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.sb{background:#f9f9f9;border:2.5px solid #1a1a1a;border-radius:12px;padding:14px 16px;margin-bottom:12px}
 .stl{font-size:15px;font-weight:700;color:#0F6E56;margin-bottom:12px}
 .sr{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee;font-size:13px}
 .sr:last-child{border-bottom:none}
@@ -71,7 +71,7 @@ textarea{resize:vertical}
   #sidebar-stats { padding: 12px 16px 20px; border-top: 1px solid rgba(255,255,255,0.15); }
   #sidebar-stats .stat-item { display: flex; justify-content: space-between; color: #9FE1CB; font-size: 12px; padding: 5px 0; }
   #sidebar-stats .stat-item span { color: #fff; font-weight: 700; }
-  #main-content { flex: 1; overflow-y: auto; background: #f0f0f0; display: flex; flex-direction: column; }
+  #main-content { flex: 1; overflow-y: auto; background: #b3b3b3; display: flex; flex-direction: column; }
   #desktop-header { background: #fff; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 4px rgba(0,0,0,0.1); flex-shrink: 0; }
   #desktop-header-title { font-size: 18px; font-weight: 700; color: #0F6E56; }
   #desktop-header-user { font-size: 13px; color: #666; display: flex; align-items: center; gap: 8px; background: #e8f5e9; padding: 6px 12px; border-radius: 20px; }
@@ -79,7 +79,7 @@ textarea{resize:vertical}
   #R { flex: 1; }
   #R .hdr { display: none !important; }
   #R .nav { display: none !important; }
-  #R .pg { padding: 20px 24px 30px; max-width: 900px; }
+  #R .pg { padding: 20px 24px 30px; max-width: 900px; background: transparent; }
   #R .card { border-radius: 12px; }
 }
 @media (max-width: 767px) {
@@ -87,7 +87,7 @@ textarea{resize:vertical}
   #sidebar { display: none !important; }
   #desktop-header { display: none !important; }
   #main-content { width: 100%; }
-  body { max-width: 480px; margin: 0 auto; }
+  body { max-width: 480px; margin: 0 auto; background: #999999; }
 }
 
 </style>
@@ -518,12 +518,12 @@ function bHm(){
   for(var i=0;i<ss.length;i++){var s=ss[i];o+='<div class="st"><div style="font-size:18px;margin-bottom:4px">'+s[0]+'</div><div style="font-size:11px;color:#888;margin-bottom:4px">'+s[1]+'</div><div style="font-size:26px;font-weight:700;color:'+s[3]+'">'+s[2]+'</div></div>';}
   o+='</div>';
   var bs=[["&#128101;","Clients","Ajouter, voir vos clients","c"],["&#128084;","Depot","Nouveau depot, suivi RDV","d"],["&#11088;","Abonnements","Gerer les abonnements","a"],["&#128269;","Recherche","Chercher client, depot, RDV","s"]];
-  for(var j=0;j<bs.length;j++){var b=bs[j];o+='<button class="card" data-go="'+b[3]+'" style="display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;width:100%;border:1px solid #e8e8e8;margin-bottom:8px"><span style="font-size:24px">'+b[0]+'</span><div style="flex:1"><div style="font-weight:600;font-size:15px">'+b[1]+'</div><div style="font-size:12px;color:#888;margin-top:2px">'+b[2]+'</div></div><span style="color:#ccc;font-size:22px">&#8250;</span></button>';}
-  o+='<div style="margin-top:8px"><div style="font-size:13px;font-weight:700;color:#333;margin-bottom:10px">&#128190; Sauvegarde</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button id="btnXE" style="background:#1565c0;color:#fff;border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:600;cursor:pointer">&#128190; Exporter<br><span style="font-size:11px;font-weight:400">Sauvegarder</span></button><button id="btnXI" style="background:#2e7d32;color:#fff;border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:600;cursor:pointer">&#128228; Importer<br><span style="font-size:11px;font-weight:400">Restaurer</span></button></div><input type="file" id="iF" accept=".json" style="display:none"><div style="font-size:11px;color:#888;margin-top:8px;text-align:center">Exportez regulierement pour securiser vos donnees</div></div>';
-  o+='<div style="margin-top:10px"><button id="btnSec" style="width:100%;background:#fff;border:1px solid #e8e8e8;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 1px 3px rgba(0,0,0,0.06)"><span style="font-size:24px">&#128274;</span><div style="flex:1"><div style="font-weight:600;font-size:15px">Securite</div><div style="font-size:12px;color:#888;margin-top:2px">Configurer un mot de passe</div></div><span style="color:#ccc;font-size:22px">&#8250;</span></button></div>';
+  for(var j=0;j<bs.length;j++){var b=bs[j];o+='<button class="card" data-go="'+b[3]+'" style="display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;width:100%;border:2.5px solid #1a1a1a;margin-bottom:8px"><span style="font-size:24px">'+b[0]+'</span><div style="flex:1"><div style="font-weight:600;font-size:15px">'+b[1]+'</div><div style="font-size:12px;color:#888;margin-top:2px">'+b[2]+'</div></div><span style="color:#ccc;font-size:22px">&#8250;</span></button>';}
+  o+='<div style="margin-top:8px"><div style="font-size:13px;font-weight:700;color:#333;margin-bottom:10px">&#128190; Sauvegarde</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button id="btnXE" style="background:#1565c0;color:#fff;border:2.5px solid #1a1a1a;border-radius:10px;padding:12px;font-size:13px;font-weight:600;cursor:pointer">&#128190; Exporter<br><span style="font-size:11px;font-weight:400">Sauvegarder</span></button><button id="btnXI" style="background:#2e7d32;color:#fff;border:2.5px solid #1a1a1a;border-radius:10px;padding:12px;font-size:13px;font-weight:600;cursor:pointer">&#128228; Importer<br><span style="font-size:11px;font-weight:400">Restaurer</span></button></div><input type="file" id="iF" accept=".json" style="display:none"><div style="font-size:11px;color:#888;margin-top:8px;text-align:center">Exportez regulierement pour securiser vos donnees</div></div>';
+  o+='<div style="margin-top:10px"><button id="btnSec" style="width:100%;background:#fff;border:2.5px solid #1a1a1a;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,0.15)"><span style="font-size:24px">&#128274;</span><div style="flex:1"><div style="font-weight:600;font-size:15px">Securite</div><div style="font-size:12px;color:#888;margin-top:2px">Configurer un mot de passe</div></div><span style="color:#ccc;font-size:22px">&#8250;</span></button></div>';
   var cu=getCurrentUser();
   o+='<div id="mobileInstallDiv" style="margin-top:10px;display:none"><button onclick="installPWA()" style="width:100%;background:#0F6E56;color:#fff;border:none;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 1px 3px rgba(0,0,0,0.1)"><span style="font-size:24px">&#11015;</span><div style="flex:1"><div style="font-weight:600;font-size:15px">Installer l application</div><div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px">Ajouter a l ecran d accueil</div></div></button></div>';
-  o+='<div style="margin-top:10px"><button id="btnLogout" style="width:100%;background:#fff;border:1.5px solid #e53935;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 1px 3px rgba(0,0,0,0.06)"><span style="font-size:24px">&#128682;</span><div style="flex:1"><div style="font-weight:600;font-size:15px;color:#e53935">Se deconnecter</div><div style="font-size:12px;color:#888;margin-top:2px">Connecte : '+(cu?cu.nom||cu.user:"")+'</div></div></button></div>';
+  o+='<div style="margin-top:10px"><button id="btnLogout" style="width:100%;background:#fff;border:2.5px solid #e53935;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,0.15)"><span style="font-size:24px">&#128682;</span><div style="flex:1"><div style="font-weight:600;font-size:15px;color:#e53935">Se deconnecter</div><div style="font-size:12px;color:#888;margin-top:2px">Connecte : '+(cu?cu.nom||cu.user:"")+'</div></div></button></div>';
   return o+'</div>';
 }
 
@@ -1147,7 +1147,7 @@ function showSecurite(){
   ul.style.cssText="list-style:none;padding:0;margin:0";
   users.forEach(function(u){
     var li=document.createElement("li");
-    li.style.cssText="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#f5f5f5;border-radius:8px;margin-bottom:8px;border:1.5px solid #e0e0e0";
+    li.style.cssText="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#f5f5f5;border-radius:8px;margin-bottom:8px;border:2.5px solid #1a1a1a";
     var info=document.createElement("div");
     var nm=document.createElement("div");
     nm.style.cssText="font-weight:700;font-size:13px;color:#1a1a1a";
