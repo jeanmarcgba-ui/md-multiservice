@@ -136,7 +136,7 @@ function installPWA(){
       <button onclick="go('a')" id="snav-a">&#11088; Abonnements</button>
       <button onclick="go('s')" id="snav-s">&#128269; Recherche</button>
       <button onclick="showSecurite()" id="snav-sec">&#128274; Securite</button>
-      <button onclick="logout()" id="snav-logout" style="background:rgba(229,57,53,0.2);color:#ff8a80;margin-top:8px">&#128682; Deconnexion</button>
+      <button onclick="logout()" id="snav-logout" style="background:linear-gradient(135deg,#c62828,#e53935);color:#fff;border:2.5px solid #fff;border-radius:10px;padding:12px 16px;margin-top:16px;font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;box-shadow:0 4px 12px rgba(229,57,53,0.4)">&#128682; Se deconnecter</button>
       <button onclick="xprt()" id="snav-exp">&#128190; Exporter</button>
       <button onclick="document.getElementById('iF').click()" id="snav-imp">&#128228; Importer</button>
     </div>
@@ -523,7 +523,7 @@ function bHm(){
   o+='<div style="margin-top:10px"><button id="btnSec" style="width:100%;background:#fff;border:2.5px solid #1a1a1a;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,0.15)"><span style="font-size:24px">&#128274;</span><div style="flex:1"><div style="font-weight:600;font-size:15px">Securite</div><div style="font-size:12px;color:#888;margin-top:2px">Configurer un mot de passe</div></div><span style="color:#ccc;font-size:22px">&#8250;</span></button></div>';
   var cu=getCurrentUser();
   o+='<div id="mobileInstallDiv" style="margin-top:10px;display:none"><button onclick="installPWA()" style="width:100%;background:#0F6E56;color:#fff;border:none;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 1px 3px rgba(0,0,0,0.1)"><span style="font-size:24px">&#11015;</span><div style="flex:1"><div style="font-weight:600;font-size:15px">Installer l application</div><div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px">Ajouter a l ecran d accueil</div></div></button></div>';
-  o+='<div style="margin-top:10px"><button id="btnLogout" style="width:100%;background:#fff;border:2.5px solid #e53935;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,0.15)"><span style="font-size:24px">&#128682;</span><div style="flex:1"><div style="font-weight:600;font-size:15px;color:#e53935">Se deconnecter</div><div style="font-size:12px;color:#888;margin-top:2px">Connecte : '+(cu?cu.nom||cu.user:"")+'</div></div></button></div>';
+  o+='<div style="margin-top:10px"><button id="btnLogout" style="width:100%;background:linear-gradient(135deg,#c62828,#e53935);border:2.5px solid #1a1a1a;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:0 4px 16px rgba(229,57,53,0.35)"><span style="font-size:24px">&#128682;</span><div style="flex:1"><div style="font-weight:700;font-size:15px;color:#fff">Se deconnecter</div><div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px">Connecte : '+(cu?cu.nom||cu.user:"")+'</div></div></button></div>';
   return o+'</div>';
 }
 
@@ -556,7 +556,35 @@ function bCV(){
   for(var j=0;j<as.length;j++){var ab=as[j];var t=AB.find(function(x){return x.id===ab.tid;});o+='<div class="card" data-va="'+ab.id+'" style="cursor:pointer"><div style="font-weight:600">'+(t?t.n:"")+' - '+fm(t?t.p:0)+' FCFA/mois</div><div style="font-size:12px;color:#888;margin-top:4px">'+(ab.rs||[]).filter(function(r){return r.f;}).length+'/'+(t?t.r:0)+' ramassages</div></div>';}
   return o+'</div>';
 }
-function sc(){var n=gv("fn")||gt("fn"),p=gv("fp")||gt("fp"),t=gv("ft")||gt("ft");if(!n||!p||!t){alert("Nom, prenom et telephone obligatoires");return;}if(FM&&FM.id){var i=D.c.findIndex(function(x){return x.id===FM.id;});D.c[i]=Object.assign({},D.c[i],{n:n,p:p,a:gv("fa"),t:t});}else D.c.push({id:uid(),n:n,p:p,a:gv("fa"),t:t});sv();bs();}
+function sc(){
+  var n=gv("fn")||gt("fn"),p=gv("fp")||gt("fp"),t=gv("ft")||gt("ft");
+  if(!n||!p||!t){alert("Nom, prenom et telephone obligatoires");return;}
+
+  // Verifier les doublons (nom+prenom OU telephone)
+  var nomComplet=(p+" "+n).toLowerCase().trim();
+  var tel=t.replace(/\D/g,"");
+
+  var doublon=D.c.find(function(c){
+    // Ignorer le client actuel si on le modifie
+    if(FM&&FM.id&&c.id===FM.id) return false;
+    var cNom=(c.p+" "+c.n).toLowerCase().trim();
+    var cTel=(c.t||"").replace(/\D/g,"");
+    return cNom===nomComplet || (tel.length>=8 && cTel===tel);
+  });
+
+  if(doublon){
+    alert("ATTENTION ! Ce client existe deja dans la base de donnees :\n\nNom : "+doublon.p+" "+doublon.n+"\nTelephone : "+doublon.t+"\n\nVeuillez verifier avant d enregistrer.");
+    return;
+  }
+
+  if(FM&&FM.id){
+    var i=D.c.findIndex(function(x){return x.id===FM.id;});
+    D.c[i]=Object.assign({},D.c[i],{n:n,p:p,a:gv("fa"),t:t});
+  } else {
+    D.c.push({id:uid(),n:n,p:p,a:gv("fa"),t:t});
+  }
+  sv();bs();
+}
 
 function bD(){
   if(SB==="v")return bDV();if(SB==="f")return bDF();
@@ -784,31 +812,39 @@ function sovl(txt,titre){
 }
 
 function xprt(){
+  // Sauvegarde COMPLETE incluant toutes les photos
   var data=JSON.stringify(D);
   var date=new Date().toISOString().split("T")[0];
-  var filename="MD_Pressing_Sauvegarde_"+date+".json";
+  var filename="MD_Pressing_COMPLET_"+date+".json";
   var nbC=D.c.length,nbD=D.d.length,nbA=D.a.length;
+
+  // Compter les photos
+  var nbPh=0;
+  D.d.forEach(function(d){nbPh+=(d.ph||[]).length;});
+  D.a.forEach(function(ab){(ab.rs||[]).forEach(function(r){nbPh+=(r.ph||[]).length;});});
+
+  var sizeMo=(data.length/1024/1024).toFixed(2);
 
   cl("bkOvl");
   var ov=document.createElement("div");ov.id="bkOvl";ov.className="ov";
   var inn=document.createElement("div");inn.className="oi";
 
   var ttl=document.createElement("div");
-  ttl.style.cssText="font-weight:700;font-size:15px;color:#0F6E56;margin-bottom:8px";
-  ttl.textContent="Sauvegarde du "+date;
+  ttl.style.cssText="font-weight:700;font-size:16px;color:#0F6E56;margin-bottom:8px";
+  ttl.innerHTML="&#128190; Sauvegarde complete du "+date;
 
   var inf=document.createElement("div");
-  inf.style.cssText="font-size:12px;color:#333;margin-bottom:12px;background:#e8f5e9;padding:8px 10px;border-radius:8px";
-  inf.textContent=nbC+" clients, "+nbD+" depots, "+nbA+" abonnements";
+  inf.style.cssText="font-size:12px;color:#333;margin-bottom:8px;background:#e8f5e9;padding:10px 12px;border-radius:8px;border:1.5px solid #a5d6a7";
+  inf.innerHTML="<strong>"+nbC+"</strong> clients &bull; <strong>"+nbD+"</strong> depots &bull; <strong>"+nbA+"</strong> abonnements &bull; <strong>"+nbPh+"</strong> photos<br><span style='color:#555;font-size:11px'>Taille sauvegarde : "+sizeMo+" Mo (photos incluses)</span>";
 
   var inf2=document.createElement("div");
-  inf2.style.cssText="font-size:12px;color:#e65100;font-weight:600;margin-bottom:12px;background:#fff3e0;padding:8px 10px;border-radius:8px;line-height:1.5";
-  inf2.textContent="Choisissez une methode pour sauvegarder vos donnees :";
+  inf2.style.cssText="font-size:12px;color:#e65100;font-weight:600;margin-bottom:12px;background:#fff3e0;padding:8px 10px;border-radius:8px";
+  inf2.textContent="Toutes vos photos sont incluses dans la sauvegarde.";
 
-  // Bouton 1 - Telecharger fichier
+  // Bouton 1 - Telecharger fichier complet
   var bdl=document.createElement("button");
-  bdl.style.cssText="background:#1565c0;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px";
-  bdl.textContent="💾 Telecharger le fichier .json";
+  bdl.style.cssText="background:#1565c0;color:#fff;border:2.5px solid #1a1a1a;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px";
+  bdl.innerHTML="&#128190; Telecharger le fichier ("+sizeMo+" Mo)";
   bdl.onclick=function(){
     try{
       var blob=new Blob([data],{type:"application/json"});
@@ -817,7 +853,7 @@ function xprt(){
       a.href=url;a.download=filename;a.style.display="none";
       document.body.appendChild(a);a.click();
       setTimeout(function(){try{document.body.removeChild(a);URL.revokeObjectURL(url);}catch(e){}},500);
-      alert("Fichier telecharge ! Verifiez votre dossier Telechargements.");
+      alert("Fichier "+filename+" telecharge !\nIl contient TOUTES vos donnees et photos.\nConservez-le precieusement !");
     }catch(e){
       try{
         var uri="data:application/json;charset=utf-8,"+encodeURIComponent(data);
@@ -825,51 +861,50 @@ function xprt(){
         a2.href=uri;a2.download=filename;a2.style.display="none";
         document.body.appendChild(a2);a2.click();
         setTimeout(function(){try{document.body.removeChild(a2);}catch(x){}},500);
-        alert("Fichier telecharge ! Verifiez votre dossier Telechargements.");
+        alert("Fichier telecharge ! Toutes vos photos sont incluses.");
       }catch(e2){
-        alert("Telechargement impossible sur cet appareil. Utilisez le bouton Copier.");
+        alert("Telechargement impossible. Utilisez Gmail ou copiez le texte.");
       }
     }
   };
 
-  // Bouton 2 - Copier texte
-  var ta=document.createElement("textarea");
-  ta.readOnly=true;ta.value=data;
-  ta.style.cssText="width:100%;height:80px;border:1.5px solid #ddd;border-radius:8px;padding:8px;font-size:10px;font-family:monospace;resize:none;box-sizing:border-box;margin-bottom:8px";
-
-  var bc=document.createElement("button");
-  bc.style.cssText="background:#0F6E56;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px";
-  bc.textContent="📋 Copier le texte (coller dans Gmail)";
-  bc.onclick=function(){
-    try{
-      ta.select();ta.setSelectionRange(0,99999);
-      var ok=document.execCommand("copy");
-      if(ok){alert("Copie reussie ! Ouvrez Gmail et collez le texte. Envoyez a vous-meme.");}
-      else{alert("Appuyez longuement sur le texte > Tout selectionner > Copier");}
-    }catch(e){alert("Appuyez longuement sur le texte ci-dessus > Tout selectionner > Copier");}
+  // Bouton 2 - Gmail avec piece jointe (data URI)
+  var bem=document.createElement("button");
+  bem.style.cssText="background:#EA4335;color:#fff;border:2.5px solid #1a1a1a;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px";
+  bem.innerHTML="&#128231; Envoyer par Gmail";
+  bem.onclick=function(){
+    var subj="SAUVEGARDE COMPLETE MD Pressing "+date+" ("+sizeMo+"Mo - "+nbPh+" photos)";
+    var body="Sauvegarde complete du "+date+"\n"+nbC+" clients, "+nbD+" depots, "+nbA+" abonnements, "+nbPh+" photos\nTaille: "+sizeMo+" Mo\n\nATTENTION: Si le fichier est trop grand pour Gmail, telechargez-le et envoyez-le comme piece jointe.\n\nDATA:"+data;
+    try{window.open("mailto:?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body.substring(0,2000)));}
+    catch(e){alert("Ouvrez Gmail et joignez le fichier telecharge.");}
   };
 
-  // Bouton 3 - Email direct
-  var bem=document.createElement("button");
-  bem.style.cssText="background:#EA4335;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px";
-  bem.textContent="📧 Ouvrir Gmail pour sauvegarder";
-  bem.onclick=function(){
-    var subj="Sauvegarde MD Pressing "+date+" ("+nbC+"C/"+nbD+"D/"+nbA+"A)";
-    var body="Sauvegarde du "+date+" - "+nbC+" clients, "+nbD+" depots, "+nbA+" abonnements - CODE: "+data;
-    try{
-      window.open("mailto:?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body));
-    }catch(e){alert("Impossible d ouvrir Gmail. Copiez le texte et collez dans Gmail manuellement.");}
+  // Bouton 3 - Copier (pour petites sauvegardes)
+  var ta=document.createElement("textarea");
+  ta.readOnly=true;ta.value=data;
+  ta.style.cssText="width:100%;height:70px;border:2px solid #ddd;border-radius:8px;padding:8px;font-size:10px;font-family:monospace;resize:none;box-sizing:border-box;margin-bottom:8px";
+
+  var bc=document.createElement("button");
+  bc.style.cssText="background:#0F6E56;color:#fff;border:2.5px solid #1a1a1a;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px";
+  bc.innerHTML="&#128203; Copier le texte";
+  bc.onclick=function(){
+    try{ta.select();ta.setSelectionRange(0,99999);var ok=document.execCommand("copy");
+    alert(ok?"Copie reussie ! Collez dans Gmail ou WhatsApp.":"Appuyez longuement sur le texte > Tout selectionner > Copier");}
+    catch(e){alert("Appuyez longuement sur le texte > Tout selectionner > Copier");}
   };
 
   var bx=document.createElement("button");
-  bx.style.cssText="background:#eee;color:#333;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;width:100%";
+  bx.style.cssText="background:#eee;color:#333;border:1.5px solid #ccc;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;width:100%";
   bx.textContent="Fermer";
   bx.onclick=function(){cl("bkOvl");};
 
   inn.appendChild(ttl);inn.appendChild(inf);inn.appendChild(inf2);
-  inn.appendChild(bdl);inn.appendChild(ta);inn.appendChild(bc);inn.appendChild(bem);inn.appendChild(bx);
+  inn.appendChild(bdl);inn.appendChild(bem);
+  inn.appendChild(ta);inn.appendChild(bc);inn.appendChild(bx);
   ov.appendChild(inn);document.body.appendChild(ov);
 }
+
+
 function showImportOvl(){
   cl("bkOvl");
   var ov=document.createElement("div");ov.id="bkOvl";ov.className="ov";
