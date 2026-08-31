@@ -594,7 +594,7 @@ function bDV(){
 function dcc(cid){var c=D.c.find(function(x){return x.id==cid;});if(c){var t=document.getElementById("ftel");if(t)t.value=c.t||"";var a=document.getElementById("fadr");if(a)a.value=c.a||"";}}
 function apd(){var ip=document.getElementById("pi");if(!ip)return;if(ip.files&&ip.files.length>0){Array.from(ip.files).forEach(function(f){var r=new FileReader();r.onload=function(e){FM.ph.push(e.target.result);re();};r.readAsDataURL(f);});}else{var u=prompt("Entrez l URL de la photo:");if(u&&u.trim()){FM.ph.push(u.trim());re();}}}
 function rph(i){FM.ph.splice(i,1);re();}
-function sd(){var ce=document.getElementById("fcid");var cid=ce?parseInt(ce.value):0;var rd=gv("frd"),rh=gv("frh"),nv=gv("fnv");if(!cid){alert("Selectionner un client");return;}if(!rd||!rh){alert("Date et heure du RDV obligatoires");return;}if(!nv){alert("Nombre de vetements obligatoire");return;}var dep={id:FM.id||uid(),cid:cid,tel:gv("ftel"),adr:gv("fadr"),nv:parseInt(nv)||0,desc:gt("tdesc"),m:parseFloat(gv("fm_"))||0,av:parseFloat(gv("fav"))||0,rd:rd,rh:rh,ph:FM.ph||[],rf:FM.rf||false};if(FM.id){var i=D.d.findIndex(function(x){return x.id===FM.id;});D.d[i]=dep;}else D.d.push(dep);sv();bs();}
+function sd(){var ce=document.getElementById("fcid");var cid=ce?parseInt(ce.value):0;var rd=gv("frd"),rh=gv("frh"),nv=gv("fnv");if(!cid){alert("Selectionner un client");return;}if(!rd||!rh){alert("Date et heure du RDV obligatoires");return;}if(!nv){alert("Nombre de vetements obligatoire");return;}var cu_=getCurrentUser();var dep={id:FM.id||uid(),cid:cid,tel:gv("ftel"),adr:gv("fadr"),nv:parseInt(nv)||0,desc:gt("tdesc"),m:parseFloat(gv("fm_"))||0,av:parseFloat(gv("fav"))||0,rd:rd,rh:rh,ph:FM.ph||[],rf:FM.rf||false,agentNom:FM.agentNom||(cu_?cu_.nom||cu_.user:""),agentUser:FM.agentUser||(cu_?cu_.user:"")};if(FM.id){var i=D.d.findIndex(function(x){return x.id===FM.id;});D.d[i]=dep;}else D.d.push(dep);sv();bs();}
 function wad(id){
   var d=D.d.find(function(x){return x.id===id;});
   var c=D.c.find(function(x){return x.id===(d&&d.cid);});
@@ -622,10 +622,11 @@ function wad(id){
     +"Statut : "+(d.rf?"Effectue":"En attente")+"\n"
     +"--------------------------------\n"
     +"Merci de votre confiance !\n"
-    +"_Votre satisfaction, notre priorite_";
+    +"_Votre satisfaction, notre priorite_\n"
+    +(d.agentNom?"\n*Enregistre par :* "+d.agentNom:"");
   owp("https://wa.me/"+wn(c.t)+"?text="+encodeURIComponent(msg));
 }
-function epd(id){var d=D.d.find(function(x){return x.id===id;});var c=D.c.find(function(x){return x.id===(d&&d.cid);});if(!d||!c)return;var rs=(d.m||0)-(d.av||0);var txt="=== MD MULTISERVICE - FICHE DEPOT ===\n\nClient : "+c.p+" "+c.n+"\nTelephone : "+c.t+"\n"+(c.a?"Adresse : "+c.a+"\n":"")+"\nVetements : "+(d.nv||0)+"\nDescription : "+(d.desc||"-")+"\nMontant : "+fm(d.m)+" FCFA\nAvance : "+fm(d.av)+" FCFA\nReste : "+fm(rs)+" FCFA\nRDV : "+fd(d.rd)+" a "+(d.rh||"")+"\nStatut : "+(d.rf?"Effectue":"En attente")+"\n\n--- MD Multiservice, Abidjan ---";sovl(txt,"Fiche - "+c.p+" "+c.n);}
+function epd(id){var d=D.d.find(function(x){return x.id===id;});var c=D.c.find(function(x){return x.id===(d&&d.cid);});if(!d||!c)return;var rs=(d.m||0)-(d.av||0);var txt="=== MD MULTISERVICE - FICHE DEPOT ===\n\nClient : "+c.p+" "+c.n+"\nTelephone : "+c.t+"\n"+(c.a?"Adresse : "+c.a+"\n":"")+"\nVetements : "+(d.nv||0)+"\nDescription : "+(d.desc||"-")+"\nMontant : "+fm(d.m)+" FCFA\nAvance : "+fm(d.av)+" FCFA\nReste : "+fm(rs)+" FCFA\nRDV : "+fd(d.rd)+" a "+(d.rh||"")+"\nStatut : "+(d.rf?"Effectue":"En attente")+(d.agentNom?"\nEnregistre par : "+d.agentNom:"")+"\n\n--- MD Multiservice, Abidjan ---";sovl(txt,"Fiche - "+c.p+" "+c.n);}
 
 function bA(){
   if(SB==="v")return bAV();if(SB==="f")return bAF();
@@ -663,7 +664,7 @@ function bAV(){
   if(lm)o+='<div class="wn">&#9888; LIMITE : '+tv+' vetements sur '+(t?t.v:0)+' autorises ce mois !</div>';
   o+='<div class="sb" style="margin-top:12px"><div class="stl">&#11088; Resume abonnement</div>';
   if(c)o+='<div style="background:#e8f5e9;border-radius:8px;padding:10px 12px;margin-bottom:12px"><div style="font-weight:700;font-size:14px">'+es(c.p)+' '+es(c.n)+'</div><div style="font-size:12px;color:#555;margin-top:3px">'+es(c.t)+(c.a?" - "+es(c.a):"")+'</div></div>';
-  o+='<div class="sr"><span class="sl">Type</span><span class="sv">'+es(t?t.n:"")+'</span></div><div class="sr"><span class="sl">Vetements max</span><span class="sv" style="color:'+(lm?"#b71c1c":"#2e7d32")+'">'+tv+' / '+(t?t.v:0)+'</span></div><div class="sr"><span class="sl">Ramassages</span><span class="sv">'+nf+' / '+(t?t.r:0)+' effectues</span></div><div class="sr"><span class="sl">Montant</span><span class="sv">'+fm(ab.m)+' FCFA</span></div><div class="sr"><span class="sl">Avance</span><span class="sv">'+fm(ab.av)+' FCFA</span></div><div class="sr"><span class="sl">Reste</span><span class="sv" style="color:'+(rs>0?"#e65100":"#2e7d32")+'">'+fm(rs)+' FCFA</span></div></div>';
+  o+='<div class="sr"><span class="sl">Type</span><span class="sv">'+es(t?t.n:"")+'</span></div><div class="sr"><span class="sl">Vetements max</span><span class="sv" style="color:'+(lm?"#b71c1c":"#2e7d32")+'">'+tv+' / '+(t?t.v:0)+'</span></div><div class="sr"><span class="sl">Ramassages</span><span class="sv">'+nf+' / '+(t?t.r:0)+' effectues</span></div><div class="sr"><span class="sl">Montant</span><span class="sv">'+fm(ab.m)+' FCFA</span></div><div class="sr"><span class="sl">Avance</span><span class="sv">'+fm(ab.av)+' FCFA</span></div><div class="sr"><span class="sl">Reste</span><span class="sv" style="color:'+(rs>0?"#e65100":"#2e7d32")+'">'+fm(rs)+' FCFA</span></div>'+(ab.agentNom?'<div class="sr"><span class="sl" style="font-weight:700">Enregistre par</span><span class="sv" style="color:#0F6E56;font-weight:700">'+es(ab.agentNom)+'</span></div>':'')+'</div>';
   for(var i=0;i<(ab.rs||[]).length;i++){
     var r=ab.rs[i];var df=du(r.rd);var ug=!r.f&&df<=5;var rp="";
     if((r.ph||[]).length>0){rp='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">';for(var pi=0;pi<r.ph.length;pi++)rp+='<img src="'+r.ph[pi]+'" data-pz="'+r.ph[pi]+'" style="width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid #ddd;cursor:zoom-in">';rp+='</div>';}
@@ -694,7 +695,7 @@ function sa(){
     }
   }
   if(!auMoinsUnRdv){alert("Veuillez renseigner au moins un rendez-vous.");return;}
-  var ab={id:FM.id||uid(),cid:cid,tid:tid,tel:gv("ftel2"),adr:gv("fadr2"),dd:gv("fdd"),m:parseFloat(gv("fm2"))||t.p,av:parseFloat(gv("fav2"))||0,rs:rs};
+  var cu2_=getCurrentUser();var ab={id:FM.id||uid(),cid:cid,tid:tid,tel:gv("ftel2"),adr:gv("fadr2"),dd:gv("fdd"),m:parseFloat(gv("fm2"))||t.p,av:parseFloat(gv("fav2"))||0,rs:rs,agentNom:FM.agentNom||(cu2_?cu2_.nom||cu2_.user:""),agentUser:FM.agentUser||(cu2_?cu2_.user:"")};
   if(FM.id){var i=D.a.findIndex(function(x){return x.id===FM.id;});D.a[i]=ab;}else D.a.push(ab);
   sv();bs();
 }
@@ -734,7 +735,8 @@ function waa(id){
     +(rx?"*RAMASSAGES :*\n"+rx+"\n":"")
     +"--------------------------------\n"
     +"Merci de votre confiance !\n"
-    +"_Votre satisfaction, notre priorite_";
+    +"_Votre satisfaction, notre priorite_\n"
+    +(d.agentNom?"\n*Enregistre par :* "+d.agentNom:"");
   owp("https://wa.me/"+wn(c.t)+"?text="+encodeURIComponent(msg));
 }
 function epa(id){var ab=D.a.find(function(x){return x.id===id;});var c=D.c.find(function(x){return x.id===(ab&&ab.cid);});var t=AB.find(function(x){return x.id===(ab&&ab.tid);});if(!ab||!c)return;var tv=(ab.rs||[]).reduce(function(s,r){return s+(parseInt(r.nv)||0);},0);var rs=(ab.m||0)-(ab.av||0);var rx=(ab.rs||[]).map(function(r,i){return"  Ramassage "+(i+1)+": "+fd(r.rd)+" a "+(r.rh||"")+" ("+(r.nv||0)+" vets) "+(r.f?"[Effectue]":"[En attente]");}).join("\n");var txt="=== MD MULTISERVICE - ABONNEMENT ===\n\nClient : "+c.p+" "+c.n+"\nTelephone : "+c.t+"\n"+(c.a?"Adresse : "+c.a+"\n":"")+"\nType : "+(t?t.n:"")+" ("+(t?fm(t.p):"")+" FCFA/mois)\nVetements : "+tv+"/"+(t?t.v:0)+"\nMontant : "+fm(ab.m)+" FCFA\nAvance : "+fm(ab.av)+" FCFA\nReste : "+fm(rs)+" FCFA\n\nRamassages :\n"+rx+"\n\n--- MD Multiservice, Abidjan ---";sovl(txt,"Abonnement - "+c.p+" "+c.n);}
