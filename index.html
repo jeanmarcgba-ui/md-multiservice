@@ -812,7 +812,11 @@ function sovl(txt,titre){
 }
 
 function xprt(){
-  // Sauvegarde COMPLETE incluant toutes les photos
+  // Seul le createur (Jean Marc) peut faire la sauvegarde
+  if(!isAdmin()){
+    alert("Acces refuse !\n\nSeul Jean Marc (administrateur) peut effectuer la sauvegarde des donnees.");
+    return;
+  }
   var data=JSON.stringify(D);
   var date=new Date().toISOString().split("T")[0];
   var filename="MD_Pressing_COMPLET_"+date+".json";
